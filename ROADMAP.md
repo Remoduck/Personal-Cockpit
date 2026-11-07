@@ -17,9 +17,10 @@ This roadmap is a proposed sequence of learning checkpoints, not a schedule or a
 
 ## 3. Core knowledge organisation
 
-- Define a small first use case and a simple note shape before building broad features.
-- Add the minimum UI and behavior to create, view and edit notes.
+- Define a small first use case and a simple in-app note shape before building broad features; adding a separate HTML file for every topic is not the intended authoring workflow.
+- Add the minimum UI and behavior to create, view and edit notes within the application.
 - Introduce categories and nested subcategories incrementally, based on the first use case.
+- Explore consistent visual styling within a category and suitable structures or templates for different topic types.
 - **Learning checkpoint:** explain the data model, user interactions and how changes flow through the code.
 
 ## 4. Local persistence
@@ -37,8 +38,9 @@ This roadmap is a proposed sequence of learning checkpoints, not a schedule or a
 
 ## 6. Interactive HTML diagrams
 
-- Identify a specific diagram use case and define how diagrams relate to notes.
-- Choose a safe, maintainable way to render interaction; do not assume arbitrary embedded HTML is safe to execute.
+- Identify a specific diagram use case and define how an interactive diagram relates to an in-app note; the owner should be able to code or customise diagrams.
+- Evaluate the supplied `github-grimoire_Version3.html` as an optional prototype for the experience. Inspect its behavior and risks before considering any reuse.
+- Only after evaluation, choose a safe, maintainable rendering approach; do not assume arbitrary embedded HTML is safe to execute.
 - **Learning checkpoint:** explain the rendering boundary, relevant browser security concerns and how the interaction is tested.
 
 ## 7. Testing, security and refinement

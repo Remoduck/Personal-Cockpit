@@ -12,15 +12,22 @@
 - Confirmed the HTML references existing CSS and JavaScript asset paths using Python's HTML parser.
 - No dependencies were installed.
 
+## Clarified product requirements
+
+- Notes are intended to be created and managed in the application, rather than by manually adding a separate HTML file for each topic.
+- Notes should support interactive diagrams the owner can code or customise.
+- Notes in a category should have a consistent visual style, with suitable structures or templates for different kinds of topics.
+- Added the supplied `github-grimoire_Version3.html` as a clearly labelled sample note preview, isolated in a sandboxed iframe; this is a prototype only, not a selected diagram architecture.
+
 ### Application status
 
 - The landing page is a static proof of concept.
-- No local persistence, note editing, categories, search, or embedded user diagrams have been implemented.
+- No local persistence, note editing, category navigation, or search have been implemented. The sample note is a bundled HTML preview, not in-app note authoring.
 - HTML/CSS/JavaScript are being used for this starter, without a framework or build system; storage remains undecided.
 
-## Next checkpoint: Preview a sample HTML note
+## Next checkpoint: Review the sample note preview
 
-Receive the owner's sample HTML note, inspect how it should fit the page, and prepare a preview that preserves the existing landing page behavior. This checkpoint has not started because the sample has not yet been provided.
+Review the sample note within the page and decide what parts of its experience should inform future requirements. No general note-authoring or diagram-rendering approach has been selected.
 
 ## Update practice
 

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧙 The GitHub Grimoire — Your Complete Interactive Spellbook</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background: #0d1117; color: #e6edf3; padding: 16px; line-height: 1.55; }
+  h1 { text-align: center; font-size: 1.7rem; }
+  .sub { text-align: center; color: #8b949e; margin-bottom: 16px; font-size: 0.9rem; }
+  .repo-pill { text-align:center; margin-bottom:16px; }
+  .repo-pill a { color:#58a6ff; text-decoration:none; background:#161b22; border:1px solid #30363d; padding:6px 14px; border-radius:20px; font-size:0.85rem; }
+  .tabs { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+  .tab { cursor: pointer; padding: 8px 14px; border-radius: 8px; background: #161b22; border: 1px solid #30363d; font-weight: 600; font-size: 0.82rem; }
+  .tab.active { background: #6e40c9; border-color: #8957e5; }
+  .view { display: none; max-width:1200px; margin:0 auto; }
+  .view.active { display: block; }
+  .wrap { display: flex; gap: 18px; flex-wrap: wrap; }
+  .diagram { flex: 2; min-width: 300px; }
+  .panel { flex: 1; min-width: 270px; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 18px; position: sticky; top: 16px; align-self: flex-start; }
+  .lane { border: 1px solid #30363d; border-radius: 12px; padding: 14px; margin-bottom: 12px; background: #161b22; }
+  .lane-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; margin-bottom: 10px; }
+  .nodes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .node { cursor: pointer; border-radius: 10px; padding: 11px 13px; font-weight: 600; border: 2px solid transparent; transition: all .15s; flex: 1; min-width: 100px; text-align: center; font-size: 0.85rem; }
+  .node:hover { transform: translateY(-2px); filter: brightness(1.15); }
+  .node.active { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }
+  .b1{background:#1f6feb}.b2{background:#8957e5}.b3{background:#238636}.b4{background:#9e6a03}
+  .b5{background:#bc4c00}.b6{background:#a371f7;color:#0d1117}.b7{background:#db61a2;color:#0d1117}.b8{background:#1a7f7f}
+  .arrow { text-align: center; color: #8b949e; font-size: 1.3rem; margin: 2px 0; }
+  .barrier { border: 2px dashed #f85149; border-radius: 10px; padding: 7px; text-align: center; color: #f85149; font-size: 0.78rem; margin: 10px 0; font-weight: 600; }
+  .panel .emoji { font-size: 2rem; } .panel h2 { font-size: 1rem; margin: 6px 0 10px; }
+  .panel code,.card code,.term code { background: #0d1117; padding: 2px 6px; border-radius: 4px; color: #79c0ff; font-size: 0.85rem; }
+  .panel pre,.card pre,.term pre { background: #0d1117; padding: 10px; border-radius: 6px; overflow-x: auto; margin: 8px 0; border: 1px solid #30363d; font-size: 0.8rem; color:#79c0ff; }
+  .hint { color: #8b949e; font-size: 0.85rem; margin-top: 10px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
+  .card { background:#161b22; border:1px solid #30363d; border-radius:10px; padding:14px; }
+  .card h3 { font-size:0.95rem; margin-bottom:6px; color:#d2a8ff; }
+  .card .ana { color:#f0b72f; font-style:italic; font-size:0.85rem; display:block; margin-top:6px; }
+  .mindmap { text-align:center; padding:10px; }
+  .mm-root { display:inline-block; background:#6e40c9; padding:12px 20px; border-radius:12px; font-weight:700; font-size:1.1rem; margin-bottom:14px; }
+  .mm-branches { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; align-items:flex-start; }
+  .mm-branch { flex:1; min-width:150px; }
+  .mm-head { padding:9px; border-radius:8px; font-weight:700; margin-bottom:8px; cursor:pointer; }
+  .mm-head:hover{filter:brightness(1.15)}
+  .mm-leaf { background:#0d1117; border:1px solid #30363d; border-radius:6px; padding:6px 8px; margin:5px 0; font-size:0.78rem; cursor:pointer; }
+  .mm-leaf:hover{border-color:#58a6ff}
+  .tree { font-family:monospace; font-size:0.85rem; background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:16px; overflow-x:auto; }
+  .tree .q{color:#f0b72f;font-weight:700}.tree .a{color:#3fb950}
+  details { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 14px; margin-bottom:8px; }
+  details summary { cursor:pointer; font-weight:600; color:#79c0ff; }
+  details[open] summary { margin-bottom:8px; }
+  .term { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:13px; margin-bottom:9px; }
+  .term b { color:#79c0ff; } .term .ana { color:#f0b72f; font-style:italic; }
+  .flow { display:flex; flex-direction:column; gap:8px; }
+  .flow-step { background:#161b22; border:1px solid #30363d; border-left:4px solid #6e40c9; border-radius:8px; padding:12px; }
+  .flow-step b{color:#d2a8ff}
+  .legend { margin: 14px 0 0; display:flex; gap:7px; flex-wrap:wrap; justify-content:center; font-size:0.72rem; }
+  .legend span { padding:3px 9px; border-radius:6px; }
+  .cmd { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:12px; margin-bottom:8px; }
+  .cmd code{color:#79c0ff;font-size:0.85rem} .cmd .d{color:#8b949e;font-size:0.8rem;display:block;margin-top:4px}
+  .graph-wrap{display:flex;gap:18px;flex-wrap:wrap}
+  .graph{flex:2;min-width:300px;background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:18px;overflow-x:auto}
+  svg{max-width:100%}
+  .cdot{cursor:pointer;transition:r .1s}.cdot:hover{stroke:#fff;stroke-width:2}
+  .ctrl{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .ctrl button{cursor:pointer;background:#161b22;border:1px solid #30363d;color:#e6edf3;border-radius:6px;padding:6px 12px;font-size:0.8rem}
+  .ctrl button:hover{border-color:#58a6ff}
+</style>
+</head>
+<body>
+  <h1>🧙 The GitHub Grimoire</h1>
+  <p class="sub">Your complete interactive spellbook. Click tabs, boxes, and branches. Every concept has a Harry Potter analogy. ⚡</p>
+  <div class="repo-pill"><a href="https://github.com/CVE-1990-0001/regulation-explorer" target="_blank">📖 Your project: CVE-1990-0001/regulation-explorer ↗</a></div>
+
+  <div class="tabs">
+    <div class="tab active" data-v="mindmap">🧠 Mind Map</div>
+    <div class="tab" data-v="core">🪄 Core Concepts</div>
+    <div class="tab" data-v="bfw">🌿 Branch / Fork / Worktree</div>
+    <div class="tab" data-v="upstream">🔱 Origin vs Upstream</div>
+    <div class="tab" data-v="security">🔐 SSH · GPG · HTTPS</div>
+    <div class="tab" data-v="cli">💻 CLI & Commands</div>
+    <div class="tab" data-v="vmflow">🖥️ VM Workflow</div>
+    <div class="tab" data-v="flow">🔄 The PR Flow</div>
+    <div class="tab" data-v="graph">🌳 Commit Graph</div>
+    <div class="tab" data-v="decide">🧭 Decision Tree</div>
+    <div class="tab" data-v="glossary">📖 Full Glossary</div>
+  </div>
+
+  <!-- ===== MIND MAP ===== -->
+  <div class="view active" id="mindmap">
+    <div class="wrap">
+      <div class="diagram">
+        <div class="mindmap">
+          <div class="mm-root">🏰 GitHub</div>
+          <div class="mm-branches">
+            <div class="mm-branch">
+              <div class="mm-head b3">📦 Repositories</div>
+              <div class="mm-leaf" data-k="repo">Repository</div>
+              <div class="mm-leaf" data-k="fork">Fork</div>
+              <div class="mm-leaf" data-k="clone">Clone</div>
+              <div class="mm-leaf" data-k="remote">Remote</div>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-head b1">🌿 Working</div>
+              <div class="mm-leaf" data-k="branch">Branch</div>
+              <div class="mm-leaf" data-k="commit">Commit</div>
+              <div class="mm-leaf" data-k="worktree">Worktree</div>
+              <div class="mm-leaf" data-k="stash">Stash</div>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-head b4">🔄 Sync</div>
+              <div class="mm-leaf" data-k="push">Push</div>
+              <div class="mm-leaf" data-k="pull">Pull</div>
+              <div class="mm-leaf" data-k="fetch">Fetch</div>
+              <div class="mm-leaf" data-k="merge">Merge</div>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-head b6">🤝 Collaborate</div>
+              <div class="mm-leaf" data-k="pr">Pull Request</div>
+              <div class="mm-leaf" data-k="review">Review</div>
+              <div class="mm-leaf" data-k="issue">Issue</div>
+              <div class="mm-leaf" data-k="action">Actions</div>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-head b7">🔐 Identity</div>
+              <div class="mm-leaf" data-k="ssh">SSH key</div>
+              <div class="mm-leaf" data-k="gpg">GPG key</div>
+              <div class="mm-leaf" data-k="https">HTTPS / PAT</div>
+              <div class="mm-leaf" data-k="2fa">2FA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel" id="mmpanel">
+        <div class="emoji">🧠</div>
+        <h2>Click any leaf</h2>
+        <p>The mind map groups every GitHub concept. Click a leaf to learn it with its Harry Potter analogy.</p>
+        <p class="hint">Start with <b>Repository</b> or <b>Fork</b>.</p>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="b3">Repositories</span><span class="b1">Working</span><span class="b4">Sync</span><span class="b6">Collaborate</span><span class="b7">Identity</span>
+    </div>
+  </div>
+
+  <!-- ===== CORE CONCEPTS ===== -->
+  <div class="view" id="core">
+    <div class="grid">
+      <div class="card"><h3>📦 Repository ("repo")</h3>A project's folder + its entire history, stored by Git.<span class="ana">Your spellbook — every spell and every past edit, bound together.</span></div>
+      <div class="card"><h3>💾 Commit</h3>A saved snapshot of changes with a message. The atomic unit of history.<span class="ana">Casting a spell into the book with a note on what it does — permanent and labelled.</span></div>
+      <div class="card"><h3>🌿 Branch</h3>A movable pointer to a line of commits inside one repo.<span class="ana">A separate page you write on so you don't scribble over the master page (<code>main</code>).</span></div>
+      <div class="card"><h3>🍴 Fork</h3>Your personal server-side copy of someone else's repo.<span class="ana">Photocopying Dumbledore's spellbook so you can experiment freely.</span></div>
+      <div class="card"><h3>📥 Clone</h3>Downloading a repo to a machine.<span class="ana">Copying the whole spellbook onto your desk at home.</span></div>
+      <div class="card"><h3>🛰️ Remote</h3>A saved address a repo syncs with (<code>origin</code>, <code>upstream</code>, <code>enterprise</code>…).<span class="ana">An owl's destination — a saved address you send letters to.</span></div>
+      <div class="card"><h3>📜 Pull Request</h3>A formal request to merge your branch. A SEPARATE step from pushing, done in the browser.<span class="ana">Asking the gods/librarian to accept your pages into the official book.</span></div>
+      <div class="card"><h3>🔀 Merge</h3>Combining one branch's commits into another.<span class="ana">Copying your page's spells into the master page.</span></div>
+      <div class="card"><h3>⚔️ Merge conflict</h3>When two branches changed the same lines and Git can't auto-decide.<span class="ana">Two wizards edited the same spell differently — you must choose the final wording.</span></div>
+      <div class="card"><h3>📌 HEAD</h3>A pointer to "where you are right now" (usually the tip of your current branch).<span class="ana">The bookmark showing which page you're currently writing on.</span></div>
+      <div class="card"><h3>🏷️ Tag / Release</h3>A named marker on a commit, often a version (<code>v1.0</code>).<span class="ana">A wax seal marking an important, finished edition.</span></div>
+      <div class="card"><h3>📦 .gitignore</h3>A file listing things Git should NOT track (secrets, build junk).<span class="ana">The Room of Hidden Things — stuff you deliberately keep out of the book.</span></div>
+    </div>
+  </div>
+
+  <!-- ===== BRANCH / FORK / WORKTREE ===== -->
+  <div class="view" id="bfw">
+    <div class="grid">
+      <div class="card"><h3>🌿 Branch — a line of work</h3>Lives <b>inside one repo</b>. Switch with <code>git checkout name</code>. Your everyday default.<br><br><b>Use when:</b> starting any feature/fix in a repo you can push to.<span class="ana">A separate page in your own spellbook.</span></div>
+      <div class="card"><h3>🍴 Fork — a whole copy</h3>A <b>separate repo</b> under your account. Has its own branches.<br><br><b>Use when:</b> you lack push access to the original but want to contribute (fork → branch → PR).<span class="ana">Your photocopy of someone else's book.</span></div>
+      <div class="card"><h3>🪵 Worktree — two folders, one repo</h3>Check out a <b>second branch into a second folder</b>, sharing the same history/remotes.<pre>git worktree add ../hotfix feature/add-dsgvo</pre><b>Use when:</b> you need two branches live <i>at the same time</i> (compare builds, urgent fix mid-feature) without stashing.<span class="ana">Magically duplicating your desk so two pages are open at once.</span></div>
+    </div>
+    <h3 style="margin:18px 0 10px;color:#d2a8ff">They stack, not compete:</h3>
+    <div class="tree">FORK (a whole repo copy)
+ └── BRANCH (a line of work) ×many
+       └── WORKTREE (an extra folder for that branch) ×optional</div>
+    <h3 style="margin:18px 0 10px;color:#d2a8ff">Quick chooser:</h3>
+    <div class="flow">
+      <div class="flow-step"><b>Repo I can push to?</b> → just make a <b>branch</b>.</div>
+      <div class="flow-step"><b>Repo I can't push to?</b> → <b>fork</b> it, branch inside, open a PR.</div>
+      <div class="flow-step"><b>Need two branches open simultaneously?</b> → add a <b>worktree</b>.</div>
+    </div>
+  </div>
+
+  <!-- ===== ORIGIN VS UPSTREAM ===== -->
+  <div class="view" id="upstream">
+    <p style="color:#8b949e;margin-bottom:14px;">Two copies, two remotes. <b>Pull FROM upstream</b> to stay current; <b>push TO origin</b> to save your work. 🪄</p>
+    <div class="tree">upstream  (original: CVE-1990-0001)   ◄── you PULL new changes FROM here
+   │
+   │ (you forked it)
+   ▼
+origin    (your fork: Remychng)       ──► you PUSH your work TO here
+   │
+   ▼
+Pull Request  ──► proposes your changes back UP to upstream</div>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card"><h3>🍴 origin = your fork</h3>The copy you cloned: <code>Remychng/regulation-explorer</code>. You <b>push</b> your branches here. Created automatically when you clone.<span class="ana">Your personal photocopy in the dorm.</span></div>
+      <div class="card"><h3>🔱 upstream = the original</h3>The repo you forked from: <code>CVE-1990-0001/regulation-explorer</code>. You <b>pull</b> new changes from here to stay current. You add it yourself by convention.<span class="ana">The official Hogwarts library spellbook.</span></div>
+      <div class="card"><h3>❓ Why bother?</h3>Your fork is frozen at fork-time. The original keeps moving as teammates merge PRs. <code>upstream</code> lets you catch up so your work doesn't drift or conflict.<span class="ana">The library keeps adding spells — upstream copies them into your book.</span></div>
+    </div>
+    <h3 style="margin:18px 0 10px;color:#d2a8ff">Step by step</h3>
+    <div class="flow">
+      <div class="flow-step"><b>1. See current remotes</b><pre>git remote -v</pre>Only <code>origin</code> shows at first.</div>
+      <div class="flow-step"><b>2. Add upstream</b><pre>git remote add upstream https://github.com/CVE-1990-0001/regulation-explorer.git</pre>Trains a second owl. 🦉</div>
+      <div class="flow-step"><b>3. Confirm both exist</b><pre>git remote -v   # now shows origin AND upstream</pre></div>
+      <div class="flow-step"><b>4. Stay up to date (whenever you start work)</b><pre>git checkout main
+git pull upstream main      # newest changes from the original
+git push origin main        # (optional) update your fork too</pre></div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid #6e40c9;">
+      <h3>🧭 One sentence to remember</h3>
+      Pull <b>FROM upstream</b> to stay current · push <b>TO origin</b> to save your work · open a <b>PR</b> to send changes back up to upstream.
+    </div>
+  </div>
+
+  <!-- ===== SECURITY ===== -->
+  <div class="view" id="security">
+    <div class="grid">
+      <div class="card"><h3>🔑 SSH key</h3>Proves <b>who you are</b> when pushing/pulling. A key <i>pair</i>: a secret <b>private</b> key (never share) and a <b>public</b> <code>.pub</code> you give the server. Each server needs its own.<pre>ssh-keygen -t ed25519 -C "you@email"
+cat ~/.ssh/id_ed25519.pub   # give this to GitHub
+ssh -T git@github.com       # test</pre><span class="ana">A building pass — your private key is the magic word only you know; the public key is the lock the castle installs. Camp Jupiter won't accept Camp Half-Blood's pass.</span></div>
+      <div class="card"><h3>✍️ GPG key</h3>Proves <b>you really made a commit</b> by cryptographically <i>signing</i> it → the green "Verified" badge. Authentication (SSH) ≠ authorship (GPG).<pre>git config --global commit.gpgsign true</pre><span class="ana">Your personal wax seal pressed onto each page, proving no imposter wrote it.</span></div>
+      <div class="card"><h3>🌐 HTTPS + PAT</h3>The other way to connect (vs SSH). Uses a URL like <code>https://github.com/...</code> and a <b>Personal Access Token</b> instead of a password.<span class="ana">Entering through the front gate with a signed permission slip (token) rather than a secret side-passage key (SSH).</span></div>
+      <div class="card"><h3>🔢 2FA</h3>Two-Factor Authentication: password + a second code (app/key). Often required on Enterprise.<span class="ana">Needing both a password AND your wand to enter — one alone won't do.</span></div>
+      <div class="card"><h3>🆚 SSH vs HTTPS — which?</h3><b>SSH:</b> set up a key once, no typing tokens after. Great for machines you control (your VM). <b>HTTPS:</b> easier through firewalls/proxies, uses a token. Both do the same job.<span class="ana">Side-passage (SSH) vs front gate (HTTPS) — both get you into the castle.</span></div>
+      <div class="card"><h3>⚠️ Golden rule of keys</h3>Only ever share the <code>.pub</code> (public) half. The file WITHOUT <code>.pub</code> is your secret — never paste it anywhere.<span class="ana">Never tell anyone your secret magic word.</span></div>
+    </div>
+  </div>
+
+  <!-- ===== CLI ===== -->
+  <div class="view" id="cli">
+    <p style="color:#8b949e;margin-bottom:12px;">The terminal is for <code>git</code> commands. The browser is for <code>https://</code> links. Don't mix them. 🪄</p>
+    <details open><summary>🏁 Starting out</summary>
+      <div class="cmd"><code>git clone &lt;url&gt;</code><span class="d">Copy a repo to your machine.</span></div>
+      <div class="cmd"><code>cd repo &amp;&amp; code .</code><span class="d">Enter the folder and OPEN it in VS Code (makes files appear in the sidebar).</span></div>
+      <div class="cmd"><code>git status</code><span class="d">What's changed / which branch you're on. Run this constantly.</span></div>
+    </details>
+    <details><summary>🌿 Branches</summary>
+      <div class="cmd"><code>git branch -a</code><span class="d">List all branches (local + remote).</span></div>
+      <div class="cmd"><code>git checkout &lt;branch&gt;</code><span class="d">Switch to a branch.</span></div>
+      <div class="cmd"><code>git checkout -b &lt;new&gt;</code><span class="d">Create AND switch to a new branch.</span></div>
+    </details>
+    <details><summary>💾 Saving work</summary>
+      <div class="cmd"><code>git add .</code><span class="d">Stage all changes for the next commit.</span></div>
+      <div class="cmd"><code>git commit -m "message"</code><span class="d">Save a snapshot with a note.</span></div>
+      <div class="cmd"><code>git stash</code><span class="d">Temporarily shelve uncommitted work; <code>git stash pop</code> brings it back.</span></div>
+    </details>
+    <details><summary>🛰️ Remotes & syncing</summary>
+      <div class="cmd"><code>git remote -v</code><span class="d">Show saved addresses (read-only, safe).</span></div>
+      <div class="cmd"><code>git remote add &lt;name&gt; &lt;url&gt;</code><span class="d">Add a new destination (e.g. <code>enterprise</code>).</span></div>
+      <div class="cmd"><code>git remote set-url &lt;name&gt; &lt;url&gt;</code><span class="d">Fix an existing remote's address.</span></div>
+      <div class="cmd"><code>git push &lt;remote&gt; &lt;branch&gt;</code><span class="d">Upload a branch.</span></div>
+      <div class="cmd"><code>git pull</code><span class="d">Fetch + merge the latest from the remote.</span></div>
+      <div class="cmd"><code>git fetch</code><span class="d">Download updates WITHOUT merging (safe to inspect first).</span></div>
+    </details>
+    <details><summary>🪵 Worktrees</summary>
+      <div class="cmd"><code>git worktree add ../folder &lt;branch&gt;</code><span class="d">Check out another branch in a second folder.</span></div>
+      <div class="cmd"><code>git worktree list</code><span class="d">Show all worktrees.</span></div>
+    </details>
+    <details><summary>🐙 GitHub CLI (<code>gh</code>) — talks to GitHub itself</summary>
+      <div class="cmd"><code>gh auth login</code><span class="d">Log in to GitHub from the terminal.</span></div>
+      <div class="cmd"><code>gh pr create</code><span class="d">Open a Pull Request without the browser.</span></div>
+      <div class="cmd"><code>gh pr list</code><span class="d">List PRs (shows each branch).</span></div>
+      <div class="cmd"><code>gh repo clone owner/repo</code><span class="d">Clone by name.</span></div>
+      <span class="d" style="padding:0 12px;">Note: <code>git</code> manages history; <code>gh</code> manages GitHub things (PRs, issues, repos). Different tools.</span>
+    </details>
+  </div>
+
+  <!-- ===== VM WORKFLOW ===== -->
+  <div class="view" id="vmflow">
+    <div class="barrier">⚡ GOLDEN RULE: Anything touching Enterprise (github.deutsche-boerse.de) MUST happen inside the VM. Your personal laptop can't cross the firewall. ⚡</div>
+    <div class="grid" style="margin-bottom:16px;">
+      <div class="card"><h3>🏢 Scenario A — work belongs on Enterprise</h3>Push to <code>enterprise</code>, open PRs on <code>github.deutsche-boerse.de</code>. <b>Must be done in the VM.</b><span class="ana">Camp Jupiter — inside the magical border.</span></div>
+      <div class="card"><h3>🌍 Scenario B — work belongs on github.com</h3>Push to <code>origin</code> (your fork), PR to <code>CVE-1990-0001</code>. Local laptop is fine; no VM needed.<span class="ana">The open mortal world.</span></div>
+    </div>
+    <h3 style="margin:6px 0 10px;color:#d2a8ff">🖥️ Daily workflow for Enterprise (inside the VM)</h3>
+    <div class="flow">
+      <div class="flow-step"><b>One-time: clone your fork & open it</b><pre>git clone https://github.com/Remychng/regulation-explorer.git
+cd regulation-explorer
+code .          # opens folder → files appear in sidebar</pre></div>
+      <div class="flow-step"><b>One-time: add Enterprise remote + check SSH</b><pre>git remote add enterprise git@github.deutsche-boerse.de:dev/ictr.regulation-explorer.git
+ssh -T git@github.deutsche-boerse.de   # "Hi me483!" = good</pre></div>
+      <div class="flow-step"><b>1. New branch for your task</b><pre>git checkout -b feature/my-new-thing</pre></div>
+      <div class="flow-step"><b>2. Edit in the VM's VS Code; preview if you like</b><pre>python -m http.server 5500   # http://localhost:5500</pre></div>
+      <div class="flow-step"><b>3. Save your work</b><pre>git add .
+git commit -m "feat: describe your change"</pre>(Or use VS Code's Source Control panel ✓.)</div>
+      <div class="flow-step"><b>4. Push to ENTERPRISE (not origin!)</b><pre>git push enterprise feature/my-new-thing</pre></div>
+      <div class="flow-step"><b>5. Open the PR in the VM's BROWSER</b><pre>https://github.deutsche-boerse.de/dev/ictr.regulation-explorer/pull/new/feature/my-new-thing</pre>Fill in → Create pull request. 🎉 (Push ≠ PR!)</div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid #bc4c00;">
+      <h3>🧭 Decide in one line</h3>
+      Target Enterprise → do EVERYTHING in the VM, push <code>enterprise</code>. Target github.com → laptop is fine, push <code>origin</code>.
+    </div>
+  </div>
+
+  <!-- ===== PR FLOW ===== -->
+  <div class="view" id="flow">
+    <div class="wrap">
+      <div class="diagram">
+        <div class="lane"><div class="lane-title">1 · Where you write</div>
+          <div class="nodes"><div class="node b2" data-k="codespace">☁️ Codespace</div><div class="node b5" data-k="vm">🖥️ VM</div></div></div>
+        <div class="arrow">⬇️ edit → <code>git add</code> → <code>git commit</code></div>
+        <div class="lane"><div class="lane-title">2 · Local repo</div>
+          <div class="nodes"><div class="node b1" data-k="branch2">🌿 Your branch</div></div></div>
+        <div class="arrow">⬇️ <code>git push</code> (the owl 🦉)</div>
+        <div class="barrier">⚡ Firewall — only the VM crosses into Enterprise ⚡</div>
+        <div class="lane"><div class="lane-title">3 · Server (remote)</div>
+          <div class="nodes"><div class="node b7" data-k="fork2">🍴 Fork</div><div class="node b4" data-k="ent2">🔒 Enterprise</div></div></div>
+        <div class="arrow">⬇️ open PR in the BROWSER 🌐</div>
+        <div class="lane"><div class="lane-title">4 · Review & merge</div>
+          <div class="nodes"><div class="node b6" data-k="pr2">📜 Pull Request</div><div class="node b3" data-k="merge2">🔀 Merge</div></div></div>
+      </div>
+      <div class="panel" id="flowpanel">
+        <div class="emoji">🔄</div><h2>The journey of a change</h2>
+        <p>Click each box to see what happens at that stage — this is exactly the path your 5 PRs took.</p>
+        <p class="hint">Remember: <b>push ≠ PR</b>. Pushing uploads a branch; the PR is a separate ask.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COMMIT GRAPH ===== -->
+  <div class="view" id="graph">
+    <p style="color:#8b949e;margin-bottom:12px;">Watch how branches <b>diverge</b> from <code>main</code> and <b>merge</b> back. Click any commit dot. Press play to build the story step by step. 🪄</p>
+    <div class="graph-wrap">
+      <div class="graph">
+        <div class="ctrl">
+          <button onclick="gstep(-1)">⏮️ Back</button>
+          <button onclick="gplay()">▶️ Play</button>
+          <button onclick="gstep(1)">⏭️ Next</button>
+          <button onclick="greset()">🔄 Reset</button>
+        </div>
+        <svg id="gsvg" viewBox="0 0 560 360" width="560" height="360"></svg>
+      </div>
+      <div class="panel" id="gpanel" style="position:static">
+        <div class="emoji">🌳</div><h2>The story of a branch</h2>
+        <p>This mirrors your real work: <code>main</code> is the trunk, your <code>feature/…</code> branch grows beside it, then a PR merges it back.</p>
+        <p class="hint">Click dots or press ▶️ Play.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DECISION TREE ===== -->
+  <div class="view" id="decide">
+    <h3 style="color:#d2a8ff;margin-bottom:10px;">"What should I do?" — follow the questions</h3>
+    <div class="tree"><span class="q">Q: Does my work belong on Enterprise?</span>
+├─ <span class="a">YES</span> → do everything in the <b>VM</b>, <code>git push enterprise</code>, PR on deutsche-boerse.de.
+└─ <span class="a">NO (github.com)</span> → laptop is fine, <code>git push origin</code>, PR to upstream.
+
+<span class="q">Q: Do I have push access to the repo?</span>
+├─ <span class="a">YES</span> → make a <b>branch</b>, commit, push, open a PR.
+└─ <span class="q">NO</span>
+     └─ <b>Fork</b> it → branch in your fork → push → PR to the original.
+
+<span class="q">Q: Do I need two branches checked out at once?</span>
+├─ <span class="a">YES</span> → <b>git worktree add</b> a second folder.
+└─ <span class="a">NO</span>  → just <b>git checkout</b> between branches.
+
+<span class="q">Q: Files don't show in the VS Code sidebar after cloning?</span>
+└─ You cloned but didn't OPEN the folder → <code>code .</code> or File → Open Folder.
+
+<span class="q">Q: Push rejected — "Permission denied (publickey)"?</span>
+└─ Your <b>SSH key</b> isn't on that server → add the <code>.pub</code> in Settings → SSH keys.
+
+<span class="q">Q: Want the green "Verified" badge on commits?</span>
+└─ Set up a <b>GPG key</b> and enable <code>commit.gpgsign</code>.</div>
+  </div>
+
+  <!-- ===== GLOSSARY ===== -->
+  <div class="view" id="glossary">
+    <div class="term"><b>Repository</b> — a project + full history. <span class="ana">Your spellbook.</span></div>
+    <div class="term"><b>Commit</b> — a saved snapshot with a message. <span class="ana">A spell cast with a note.</span></div>
+    <div class="term"><b>Branch</b> — a line of work inside a repo. <span class="ana">A separate page.</span></div>
+    <div class="term"><b>main</b> — the default primary branch. <span class="ana">The master page everyone trusts.</span></div>
+    <div class="term"><b>Fork</b> — your copy of another's repo. <span class="ana">Your photocopy.</span></div>
+    <div class="term"><b>Clone</b> — download a repo locally. <span class="ana">Copy the book to your desk.</span></div>
+    <div class="term"><b>Remote</b> — a saved sync address. <span class="ana">An owl's destination.</span></div>
+    <div class="term"><b>origin</b> — the remote you cloned from (your fork). <span class="ana">Your home library.</span></div>
+    <div class="term"><b>upstream</b> — the original repo a fork came from; pull from it to stay current. <span class="ana">The master library you copied.</span></div>
+    <div class="term"><b>enterprise</b> — a custom remote for your company's private server. <span class="ana">Camp Jupiter behind the border.</span></div>
+    <div class="term"><b>Push</b> — upload commits to a remote. <span class="ana">Send the owl out.</span></div>
+    <div class="term"><b>Pull</b> — fetch + merge from a remote. <span class="ana">Receive and file new pages.</span></div>
+    <div class="term"><b>Fetch</b> — download without merging. <span class="ana">Receive the owl but read before filing.</span></div>
+    <div class="term"><b>Merge</b> — combine branches. <span class="ana">Copy one page's spells into another.</span></div>
+    <div class="term"><b>Merge conflict</b> — same lines changed two ways. <span class="ana">Two wizards, one spell — you pick the wording.</span></div>
+    <div class="term"><b>Pull Request</b> — request to merge; separate browser step. <span class="ana">Ask the librarian to accept your pages.</span></div>
+    <div class="term"><b>Review</b> — teammates comment/approve a PR. <span class="ana">Professors checking your spell before it's official.</span></div>
+    <div class="term"><b>Worktree</b> — second folder for another branch. <span class="ana">A duplicated desk.</span></div>
+    <div class="term"><b>Stash</b> — shelve uncommitted work temporarily. <span class="ana">Tuck loose notes into your pocket.</span></div>
+    <div class="term"><b>HEAD</b> — pointer to your current spot. <span class="ana">Your bookmark.</span></div>
+    <div class="term"><b>Tag / Release</b> — named marker/version. <span class="ana">A wax-sealed edition.</span></div>
+    <div class="term"><b>SSH key</b> — identity for connecting. <span class="ana">A secret-word building pass.</span></div>
+    <div class="term"><b>GPG key</b> — signs commits as truly yours. <span class="ana">Your wax seal.</span></div>
+    <div class="term"><b>HTTPS / PAT</b> — token-based connection. <span class="ana">Front gate with a permission slip.</span></div>
+    <div class="term"><b>2FA</b> — password + second factor. <span class="ana">Password AND wand.</span></div>
+    <div class="term"><b>Issue</b> — a tracked task/bug/idea. <span class="ana">A note on the castle notice board.</span></div>
+    <div class="term"><b>Actions</b> — automated workflows (CI/CD). <span class="ana">Enchantments that run themselves on every change.</span></div>
+    <div class="term"><b>.gitignore</b> — files Git won't track. <span class="ana">The Room of Hidden Things.</span></div>
+    <div class="term"><b>gh (GitHub CLI)</b> — terminal tool for GitHub (PRs, issues). <span class="ana">A direct owl to the Ministry.</span></div>
+    <div class="term"><b>code . </b> — opens the current folder in VS Code so files appear in the sidebar. <span class="ana">Putting the book on your desk, not just owning it.</span></div>
+  </div>
+
+<script>
+const data = {
+  repo:{e:"📦",t:"Repository",h:"A project folder plus its entire history. <span style='color:#f0b72f'>Your spellbook — every spell and every past edit bound together.</span>"},
+  fork:{e:"🍴",t:"Fork",h:"Your personal copy of someone else's repo, under your account. Your <code>Remychng/regulation-explorer</code> is a fork of <code>CVE-1990-0001/...</code>. <span style='color:#f0b72f'>Photocopying Dumbledore's spellbook to experiment freely.</span>"},
+  clone:{e:"📥",t:"Clone",h:"Download a repo to a machine. Then run <code>code .</code> to OPEN it so files show in the sidebar. <span style='color:#f0b72f'>Copy the book to your desk, then open it.</span><pre>git clone &lt;url&gt;\ncd repo &amp;&amp; code .</pre>"},
+  remote:{e:"🛰️",t:"Remote",h:"A saved address a repo syncs with (<code>origin</code>, <code>upstream</code>, <code>enterprise</code>). <span style='color:#f0b72f'>An owl's destination.</span><pre>git remote -v</pre>"},
+  branch:{e:"🌿",t:"Branch",h:"A line of work inside one repo. Your 5 features each had one. <span style='color:#f0b72f'>A separate page you write on.</span><pre>git checkout -b my-feature</pre>"},
+  commit:{e:"💾",t:"Commit",h:"A saved snapshot with a message. <span style='color:#f0b72f'>Casting a spell with a note on what it does.</span><pre>git commit -m \"add DSGVO bundle\"</pre>"},
+  worktree:{e:"🪵",t:"Worktree",h:"A second folder checked out to another branch of the same repo. <span style='color:#f0b72f'>A magically duplicated desk — two pages open at once.</span><pre>git worktree add ../hotfix feature/add-dsgvo</pre>"},
+  stash:{e:"🧺",t:"Stash",h:"Temporarily shelve uncommitted work. <span style='color:#f0b72f'>Tucking loose notes into your pocket.</span><pre>git stash   // ...later...\ngit stash pop</pre>"},
+  push:{e:"🚀",t:"Push",h:"Upload a branch to a remote. <span style='color:#f0b72f'>Sending the owl.</span><pre>git push enterprise feature/ui-polish</pre>"},
+  pull:{e:"⬇️",t:"Pull",h:"Fetch + merge the latest. <span style='color:#f0b72f'>Receive new pages and file them in.</span><pre>git pull upstream main</pre>"},
+  fetch:{e:"📡",t:"Fetch",h:"Download updates WITHOUT merging. <span style='color:#f0b72f'>Receive the owl but read before filing.</span><pre>git fetch origin</pre>"},
+  merge:{e:"🔀",t:"Merge",h:"Combine one branch into another. <span style='color:#f0b72f'>Copy one page's spells into another.</span>"},
+  pr:{e:"📜",t:"Pull Request",h:"A formal request to merge a branch — a SEPARATE step in the browser. <span style='color:#f0b72f'>Asking the librarian to accept your pages.</span>"},
+  review:{e:"👓",t:"Review",h:"Teammates comment on and approve your PR before merge. <span style='color:#f0b72f'>Professors checking your spell.</span>"},
+  issue:{e:"📝",t:"Issue",h:"A tracked task, bug, or idea. <span style='color:#f0b72f'>A note pinned to the castle notice board.</span>"},
+  action:{e:"⚙️",t:"GitHub Actions",h:"Automated workflows (tests, deploys) that run on events. <span style='color:#f0b72f'>Enchantments that run themselves on every change.</span>"},
+  ssh:{e:"🔑",t:"SSH key",h:"Proves who you are when pushing. Private key = secret; <code>.pub</code> = given to the server. Each server needs its own. <span style='color:#f0b72f'>A secret-word building pass; Camp Jupiter won't take Camp Half-Blood's.</span><pre>ssh-keygen -t ed25519 -C \"you@email\"</pre>"},
+  gpg:{e:"✍️",t:"GPG key",h:"Signs commits so they show 'Verified' — proves authorship, not just access. <span style='color:#f0b72f'>Your personal wax seal on every page.</span><pre>git config --global commit.gpgsign true</pre>"},
+  https:{e:"🌐",t:"HTTPS / PAT",h:"Connect via an https URL + a Personal Access Token instead of SSH. Often works through firewalls. <span style='color:#f0b72f'>The front gate with a permission slip.</span>"},
+  "2fa":{e:"🔢",t:"2FA",h:"Password plus a second code. Often mandatory on Enterprise. <span style='color:#f0b72f'>Password AND wand.</span>"},
+  codespace:{e:"☁️",t:"Codespace",h:"A cloud computer by GitHub. Separate from your VM. <span style='color:#f0b72f'>A different camp.</span>"},
+  vm:{e:"🖥️",t:"Company VM",h:"The machine inside the firewall — the only one that reaches Enterprise. All Enterprise work happens here. <span style='color:#f0b72f'>The camp inside the magical border.</span>"},
+  branch2:{e:"🌿",t:"Your branch (local)",h:"Where your commits live before pushing. <span style='color:#f0b72f'>Your draft page.</span>"},
+  fork2:{e:"🍴",t:"Fork (on .com)",h:"Where your 5 branches originally lived. <span style='color:#f0b72f'>Your photocopy in the dorm.</span>"},
+  ent2:{e:"🔒",t:"Enterprise server",h:"Deutsche Börse's private server behind the firewall — reachable only from the VM. <span style='color:#f0b72f'>Camp Jupiter.</span>"},
+  pr2:{e:"📜",t:"Pull Request",h:"Opened in the browser after pushing. Push ≠ PR. <span style='color:#f0b72f'>The formal ask.</span>"},
+  merge2:{e:"🔀",t:"Merge",h:"Once approved, your branch joins <code>main</code>. <span style='color:#f0b72f'>Your spells enter the master book.</span>"}
+};
+function wire(panelId){
+  return (k)=>{const c=data[k]; if(!c)return; const p=document.getElementById(panelId);
+    p.innerHTML=`<div class="emoji">${c.e}</div><h2>${c.t}</h2><p>${c.h}</p>`;};
+}
+const mmSet = wire('mmpanel'), flowSet = wire('flowpanel');
+document.querySelectorAll('#mindmap .mm-leaf').forEach(l=>l.addEventListener('click',()=>mmSet(l.dataset.k)));
+document.querySelectorAll('#flow .node').forEach(n=>n.addEventListener('click',()=>{
+  document.querySelectorAll('#flow .node').forEach(x=>x.classList.remove('active'));
+  n.classList.add('active'); flowSet(n.dataset.k);
+}));
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); document.getElementById(t.dataset.v).classList.add('active');
+}));
+
+/* ===== Commit graph ===== */
+const mainY=90, featY=220;
+const commits=[
+  {id:0,x:60,y:mainY,br:'main',msg:"Initial commit — base app",ana:"The master page everyone starts from."},
+  {id:1,x:150,y:mainY,br:'main',msg:"main moves on (teammate's work)",ana:"Others keep writing on the master page."},
+  {id:2,x:150,y:featY,br:'feat',from:1,msg:"Branch off: feature/add-dsgvo",msg2:"git checkout -b feature/add-dsgvo",ana:"You start a fresh page beside main."},
+  {id:3,x:250,y:featY,br:'feat',msg:"commit: add DSGVO data",ana:"Cast your first spell on the new page."},
+  {id:4,x:350,y:featY,br:'feat',msg:"commit: link references",msg2:"git push enterprise feature/add-dsgvo",ana:"Push sends these pages up (the owl 🦉)."},
+  {id:5,x:460,y:mainY,br:'main',from:4,merge:true,msg:"Merge PR into main",ana:"The PR is approved — your spells join the master book. 🎉"}
+];
+let gShown=0,gTimer=null;
+function greset(){gShown=0;drawGraph();}
+function gstep(d){gShown=Math.max(1,Math.min(commits.length,gShown+d));drawGraph();}
+function gplay(){if(gTimer){clearInterval(gTimer);gTimer=null;return;}gShown=0;gTimer=setInterval(()=>{if(gShown>=commits.length){clearInterval(gTimer);gTimer=null;return;}gShown++;drawGraph();},800);}
+function drawGraph(){
+  const svg=document.getElementById('gsvg'); if(!svg)return;
+  let s='';
+  s+=`<line x1="40" y1="${mainY}" x2="520" y2="${mainY}" stroke="#30363d" stroke-width="2"/>`;
+  s+=`<text x="40" y="${mainY-18}" fill="#58a6ff" font-size="13" font-family="monospace">main</text>`;
+  s+=`<text x="150" y="${featY+34}" fill="#db61a2" font-size="13" font-family="monospace">feature/add-dsgvo</text>`;
+  const vis=commits.slice(0,gShown);
+  vis.forEach(c=>{
+    if(c.from!=null){const p=commits[c.from];const col=c.merge?'#238636':'#db61a2';
+      s+=`<path d="M${p.x},${p.y} C${(p.x+c.x)/2},${p.y} ${(p.x+c.x)/2},${c.y} ${c.x},${c.y}" stroke="${col}" stroke-width="2" fill="none"/>`;}
+    const prev=vis.filter(v=>v.br===c.br && v.x<c.x).sort((a,b)=>b.x-a.x)[0];
+    if(prev && c.from==null){const col=c.br==='main'?'#1f6feb':'#db61a2';
+      s+=`<line x1="${prev.x}" y1="${prev.y}" x2="${c.x}" y2="${c.y}" stroke="${col}" stroke-width="2"/>`;}
+  });
+  vis.forEach(c=>{const col=c.merge?'#238636':(c.br==='main'?'#1f6feb':'#db61a2');
+    s+=`<circle class="cdot" data-id="${c.id}" cx="${c.x}" cy="${c.y}" r="9" fill="${col}" stroke="#0d1117" stroke-width="2"/>`;});
+  svg.innerHTML=s;
+  svg.querySelectorAll('.cdot').forEach(d=>d.addEventListener('click',()=>{
+    const c=commits[+d.dataset.id];
+    document.getElementById('gpanel').innerHTML=
+      `<div class="emoji">${c.merge?'🔀':(c.br==='main'?'🔵':'🌿')}</div>
+       <h2>${c.msg}</h2>
+       ${c.msg2?`<pre>${c.msg2}</pre>`:''}
+       <p style="color:#f0b72f;font-style:italic">${c.ana}</p>`;
+  }));
+}
+drawGraph();gShown=commits.length;drawGraph();
+</script>
+</body>
+</html>
