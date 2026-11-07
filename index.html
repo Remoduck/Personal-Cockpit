@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A calm home for the things you want to remember."
+    />
+    <title>Personal Cockpit</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="assets/js/app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar" aria-label="Personal Cockpit">
+        <a class="wordmark" href="./" aria-label="Personal Cockpit home">
+          <span class="wordmark-mark" aria-hidden="true">P</span>
+          <span>Personal Cockpit</span>
+        </a>
+        <span class="local-indicator">
+          <span class="local-indicator-dot" aria-hidden="true"></span>
+          Your personal space
+        </span>
+      </header>
+
+      <section class="welcome" aria-labelledby="page-title">
+        <p class="eyebrow">A little room for everything</p>
+        <h1 id="page-title">Good things are<br class="desktop-break" /> worth keeping.</h1>
+        <p class="intro">
+          Recipes, ideas, notes from a run, that thing you learned last week.
+          Give them a home, and find them when you need them.
+        </p>
+      </section>
+
+      <section class="empty-card" aria-labelledby="empty-title">
+        <div class="illustration" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="note note-back"></div>
+          <div class="note note-front">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="sparkle sparkle-one">✳</span>
+          <span class="sparkle sparkle-two">✳</span>
+        </div>
+        <p class="card-kicker">A fresh start</p>
+        <h2 id="empty-title">Your notes will feel right at home.</h2>
+        <p class="empty-copy">
+          This space is ready for the useful, interesting, and delightfully
+          random things you want to remember.
+        </p>
+        <button class="prompt-button" id="prompt-button" type="button">
+          <span>✦</span> Find a first note idea
+        </button>
+        <p class="prompt" id="prompt" aria-live="polite" hidden></p>
+      </section>
+
+      <footer class="page-footer">
+        <span>Made for the things you want to remember.</span>
+        <span class="footer-mark" aria-hidden="true">✳</span>
+      </footer>
+    </main>
+  </body>
+</html>
