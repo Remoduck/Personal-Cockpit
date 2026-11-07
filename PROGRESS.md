@@ -4,36 +4,28 @@
 
 ### Completed
 
-- Repository reconnaissance completed; repository path verified as `/Users/Remy_Chng/Documents/Projects/Personal-Cockpit`.
-- Foundational project documentation established in `PROJECT_CONTEXT.md`, `ROADMAP.md`, `PROGRESS.md`, `DECISIONS.md` and `AGENTS.md`.
+- Established the project context, roadmap, progress record, decisions log and repository instructions.
 - Created a responsive, static Personal Cockpit landing page with a useful empty state.
-- Added a JavaScript button that rotates through sample note ideas; no note management or storage is implemented.
+- Added a JavaScript button that rotates through sample note ideas; note management and storage are not implemented.
 - Kept `index.html` at the repository root and organized page assets under `assets/css/` and `assets/js/`.
-- Confirmed the HTML references existing CSS and JavaScript asset paths using Python's HTML parser.
-- No dependencies were installed.
+- Added the supplied GitHub diagram as a clearly labelled prototype preview in an earlier page version; its implementation is not an approved diagram architecture.
+- Recorded the clarified product requirements: create notes in the app; support interactive diagrams the owner can code or customise; optionally upload an existing HTML file as a diagram; allow diagrams/notes to be categorized; and keep notes in a category visually consistent with suitable structures or templates for different topic types.
+- No upload, storage, framework or diagram-rendering technology has been approved.
 
-## Clarified product requirements
+### Current application status
 
-- Notes are intended to be created and managed in the application, rather than by manually adding a separate HTML file for each topic.
-- Notes should support interactive diagrams the owner can code or customise.
-- The app should offer an option to upload an existing HTML file as a note diagram, and uploaded diagrams/notes should be categorizable.
-- Notes in a category should have a consistent visual style, with suitable structures or templates for different kinds of topics.
-- These are product requirements only; no upload, storage, framework or diagram-rendering technology has been approved.
-- Added the supplied `github-grimoire_Version3.html` as a clearly labelled sample note preview, isolated in a sandboxed iframe; this is a prototype only, not a selected diagram architecture.
+- The landing page and sample suggestion button are implemented as a static proof of concept.
+- The current working copy shows a static sample note under `Computers / GitHub`, marked as a preview; note creation and saving are not available.
+- No in-app note editing, categories, search, upload or local persistence have been implemented.
+- HTML, CSS and JavaScript are used in the starter, without a framework or build system. Storage and diagram rendering remain undecided.
 
-### Application status
+## Next checkpoint: Review the first runnable page
 
-- The landing page is a static proof of concept.
-- No local persistence, note editing, category navigation, or search have been implemented. The sample note is a bundled HTML preview, not in-app note authoring.
-- HTML/CSS/JavaScript are being used for this starter, without a framework or build system; storage remains undecided.
-
-## Next checkpoint: Review diagram and note workflows
-
-Review the sample note within the page, then define the intended experience for in-app note creation and optional HTML diagram upload, including how diagrams/notes are categorized and how category styles and topic structures fit. No upload, storage, framework or diagram-rendering approach has been selected.
+Review the landing page and static sample note, then define the intended in-app note creation and optional HTML diagram upload experience. Include how notes are categorized, how category styles and topic structures fit, and what should be learned from the diagram prototype. Do not select upload, storage, framework or diagram-rendering technology without evaluating the requirements first.
 
 ## Update practice
 
-- Record completed work only after it has actually been completed and verified.
+- Record completed work only after it has actually been completed.
 - Keep planned tasks separate from completed milestones.
 - Update this file at meaningful project checkpoints.
 - Record technical decisions in `DECISIONS.md` only after explicit owner approval.
