@@ -21,6 +21,7 @@ This roadmap is a proposed sequence of learning checkpoints, not a schedule or a
 - Add the minimum UI and behavior to create, view and edit notes within the application.
 - Introduce categories and nested subcategories incrementally, based on the first use case.
 - Explore consistent visual styling within a category and suitable structures or templates for different topic types.
+- Include how an uploaded HTML diagram becomes a categorizable note in the product requirements; leave upload and storage design open until evaluated.
 - **Learning checkpoint:** explain the data model, user interactions and how changes flow through the code.
 
 ## 4. Local persistence
@@ -39,8 +40,9 @@ This roadmap is a proposed sequence of learning checkpoints, not a schedule or a
 ## 6. Interactive HTML diagrams
 
 - Identify a specific diagram use case and define how an interactive diagram relates to an in-app note; the owner should be able to code or customise diagrams.
+- Define the intended user experience for optionally uploading an existing HTML file as a diagram and categorizing the resulting diagram/note.
 - Evaluate the supplied `github-grimoire_Version3.html` as an optional prototype for the experience. Inspect its behavior and risks before considering any reuse.
-- Only after evaluation, choose a safe, maintainable rendering approach; do not assume arbitrary embedded HTML is safe to execute.
+- Only after evaluation, choose any upload, storage or safe, maintainable rendering approach; do not assume arbitrary embedded HTML is safe to execute.
 - **Learning checkpoint:** explain the rendering boundary, relevant browser security concerns and how the interaction is tested.
 
 ## 7. Testing, security and refinement

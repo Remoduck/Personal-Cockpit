@@ -14,6 +14,7 @@ Example knowledge areas include:
 ## Intended capabilities
 
 - Create, edit and organise notes within the application; the owner should not need to manually add a separate HTML file for every topic.
+- Offer an option to upload an existing HTML file as a note diagram, with the resulting diagram/note categorizable.
 - Organise notes with categories and nested subcategories.
 - Keep notes within a category visually consistent, while supporting suitable structures or templates for different kinds of topics.
 - Search and navigate saved information.
@@ -25,7 +26,7 @@ These describe the intended direction; they do not mean the capabilities have be
 
 ## Diagram prototype
 
-The supplied `github-grimoire_Version3.html` may be used as one prototype to evaluate how an interactive HTML diagram could feel inside a note. It is an example for experience evaluation, not a required file-per-topic workflow or an approved rendering approach. Its implementation should be assessed before any reuse.
+The supplied `github-grimoire_Version3.html` may be used as one prototype to evaluate how an interactive HTML diagram could feel inside a note. It is an example for experience evaluation, not a required file-per-topic workflow or an approved rendering approach. Its implementation should be assessed before any reuse. Uploading an existing HTML file as a diagram is a product requirement; no upload, storage, framework or diagram-rendering technology has been selected.
 
 ## Learning objectives and working style
 

@@ -8,9 +8,11 @@ This file separates confirmed project requirements from technical proposals. A s
 - Its purpose is to organise and interact with personal knowledge across areas such as cooking, kitchenware, fitness and computers.
 - Intended capabilities include nested categories, note creation/editing/organisation, search/navigation, interactive HTML diagrams, local persistence and a clean responsive interface.
 - Notes are to be created within the application rather than by manually adding a separate HTML file for every topic.
+- The application should offer an option to upload an existing HTML file as a note diagram, and uploaded diagrams/notes should be categorizable.
 - Notes in a category should share a consistent visual style, while different topic types may need suitable structures or templates.
 - Notes should support interactive diagrams that the owner can code or customise.
 - The supplied `github-grimoire_Version3.html` may be used as a prototype to evaluate the diagram experience.
+- Uploading HTML diagrams is a product requirement only; no upload, storage, framework or diagram-rendering technology has been approved.
 - The initial goal is a proof of concept, not a full Notion replacement.
 - The owner is learning AI-assisted software engineering and prefers sequential, practical, checkpoint-based explanations that support critical review of generated code.
 - There are four tracks: application development, AI agent engineering, software engineering and code review, and personal automation and agents. Track D is a future direction, not an immediate priority.

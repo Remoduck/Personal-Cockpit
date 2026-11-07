@@ -16,7 +16,9 @@
 
 - Notes are intended to be created and managed in the application, rather than by manually adding a separate HTML file for each topic.
 - Notes should support interactive diagrams the owner can code or customise.
+- The app should offer an option to upload an existing HTML file as a note diagram, and uploaded diagrams/notes should be categorizable.
 - Notes in a category should have a consistent visual style, with suitable structures or templates for different kinds of topics.
+- These are product requirements only; no upload, storage, framework or diagram-rendering technology has been approved.
 - Added the supplied `github-grimoire_Version3.html` as a clearly labelled sample note preview, isolated in a sandboxed iframe; this is a prototype only, not a selected diagram architecture.
 
 ### Application status
@@ -25,9 +27,9 @@
 - No local persistence, note editing, category navigation, or search have been implemented. The sample note is a bundled HTML preview, not in-app note authoring.
 - HTML/CSS/JavaScript are being used for this starter, without a framework or build system; storage remains undecided.
 
-## Next checkpoint: Review the sample note preview
+## Next checkpoint: Review diagram and note workflows
 
-Review the sample note within the page and decide what parts of its experience should inform future requirements. No general note-authoring or diagram-rendering approach has been selected.
+Review the sample note within the page, then define the intended experience for in-app note creation and optional HTML diagram upload, including how diagrams/notes are categorized and how category styles and topic structures fit. No upload, storage, framework or diagram-rendering approach has been selected.
 
 ## Update practice
 
