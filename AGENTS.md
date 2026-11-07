@@ -36,6 +36,16 @@
 - Add entries to `DECISIONS.md` only after the owner explicitly approves the decision.
 - Do not duplicate large amounts of information across documentation files.
 
+## Progress tracking and commit workflow
+
+- After completing a meaningful task or milestone, review whether `PROGRESS.md` needs updating.
+- If the task changes the project's current state, completed milestones, or next steps, update `PROGRESS.md` before the final commit.
+- Include a concise summary of what was completed and identify the next checkpoint.
+- Do not update `PROGRESS.md` for trivial changes such as typo fixes, formatting adjustments or unrelated maintenance.
+- When a task includes changes to `PROGRESS.md`, stage it together with the relevant implementation changes so the progress record and implementation are committed together.
+- Never claim that work is completed unless it has been verified.
+- Do not create an additional commit solely to update `PROGRESS.md` unless explicitly requested.
+
 ## Verification and Git
 
 - Run relevant checks or tests when appropriate. Report exactly what was run and its actual result; do not imply that unrun checks passed.
