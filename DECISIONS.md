@@ -24,6 +24,8 @@ No specific implementation technology, framework, storage mechanism, project str
 
 The diagram-rendering approach is also undecided. Permission to evaluate the supplied HTML prototype does not approve its implementation for reuse.
 
+For this prototype only, the owner approved embedding the separate Grimoire HTML file in the separate sample note with an iframe that allows scripts but does not allow same-origin access. This does not select a general diagram-rendering approach for the application.
+
 ## Proposals awaiting evaluation or approval
 
 - Start with HTML, CSS and JavaScript.

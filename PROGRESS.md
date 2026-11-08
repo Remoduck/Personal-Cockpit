@@ -15,7 +15,7 @@
 ### Current application status
 
 - The landing page and sample suggestion button are implemented as a static proof of concept.
-- The current working copy shows a static sample note under `Computers / GitHub`, marked as a preview; note creation and saving are not available.
+- The current working copy shows a sample note in its own HTML file under `Computers / GitHub`, with the separate Grimoire diagram embedded in a responsive sandboxed iframe that allows scripts without same-origin access; note creation and saving are not available.
 - No in-app note editing, categories, search, upload or local persistence have been implemented.
 - HTML, CSS and JavaScript are used in the starter, without a framework or build system. Storage and diagram rendering remain undecided.
 

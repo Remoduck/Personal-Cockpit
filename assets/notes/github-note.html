@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The GitHub Grimoire — sample note</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Avenir Next", Avenir, sans-serif;
+        color: #24312e;
+        background: #fbfaf6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 25px;
+      }
+
+      .note-heading {
+        display: flex;
+        margin-bottom: 20px;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .category {
+        margin: 0 0 7px;
+        color: #778b78;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .category span {
+        padding-inline: 4px;
+        color: #b4b9ad;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 6px;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.045em;
+      }
+
+      .description {
+        margin-bottom: 0;
+        color: #71807a;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .sample-badge {
+        flex: 0 0 auto;
+        padding: 6px 9px;
+        border: 1px solid #e1e6dc;
+        border-radius: 999px;
+        color: #315b4d;
+        background: #f5f7f0;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .note-content {
+        padding: 22px 24px 24px;
+        border: 1px solid #e8e8df;
+        border-radius: 12px;
+        background: #fffefa;
+      }
+
+      .notice {
+        display: inline-block;
+        margin-bottom: 22px;
+        padding: 7px 10px;
+        border-radius: 6px;
+        color: #69775f;
+        background: #f2f4ec;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      h2 {
+        margin-bottom: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+
+      .note-content > p:not(.notice) {
+        max-width: 720px;
+        margin-bottom: 22px;
+        color: #71807a;
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .terms {
+        display: grid;
+        margin-bottom: 24px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .terms section {
+        padding: 14px;
+        border: 1px solid #eceee5;
+        border-radius: 9px;
+        background: #fafaf5;
+      }
+
+      .terms h3 {
+        margin: 0 0 6px;
+        color: #123524;
+        font-size: 12px;
+      }
+
+      .terms p {
+        margin: 0;
+        color: #71807a;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .diagram-frame {
+        display: block;
+        width: 100%;
+        height: min(78vh, 860px);
+        min-height: 620px;
+        border: 1px solid #30363d;
+        border-radius: 12px;
+        background: #0d1117;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 17px;
+        }
+
+        h1 {
+          font-size: 19px;
+        }
+
+        .note-content {
+          padding: 17px;
+        }
+
+        .terms {
+          grid-template-columns: 1fr;
+        }
+
+        .diagram-frame {
+          height: 76vh;
+          min-height: 560px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="note-heading">
+        <div>
+          <p class="category">Computers <span>/</span> GitHub</p>
+          <h1>The GitHub Grimoire</h1>
+          <p class="description">
+            A sample interactive note with diagrams, concept cards, and a
+            clickable commit graph.
+          </p>
+        </div>
+        <span class="sample-badge">Sample note</span>
+      </header>
+
+      <article class="note-content" aria-label="Sample note content">
+        <p class="notice">Preview only · Note creation and saving are not available yet.</p>
+        <h2>What is GitHub?</h2>
+        <p>
+          GitHub is a place to store Git repositories and collaborate on
+          changes. It adds tools for sharing code, reviewing contributions,
+          and tracking work around a project.
+        </p>
+        <div class="terms">
+          <section>
+            <h3>Repository</h3>
+            <p>A project space containing files and their change history.</p>
+          </section>
+          <section>
+            <h3>Commit</h3>
+            <p>A saved snapshot of changes, usually with a short message.</p>
+          </section>
+          <section>
+            <h3>Branch</h3>
+            <p>A separate line of work used to develop changes safely.</p>
+          </section>
+        </div>
+
+        <iframe
+          class="diagram-frame"
+          src="github-grimoire.html"
+          title="Interactive GitHub Grimoire diagram"
+          sandbox="allow-scripts"
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </article>
+    </main>
+  </body>
+</html>
